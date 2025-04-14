@@ -69,7 +69,7 @@ const props = defineProps({
 const homeItems = computed(() => {
   return [...props.items]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 4);
+    .slice(0, 10);
 });
 
 // 计算属性，显示特定标签下的所有文章
