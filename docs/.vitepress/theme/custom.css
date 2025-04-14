@@ -1,0 +1,38 @@
+/* 自定义样式 */
+:root {
+  --vp-c-brand: #3eaf7c;
+  --vp-c-brand-light: #4abf8a;
+  --vp-c-brand-dark: #359e6c;
+}
+
+/* 最后更新时间的额外样式 */
+.last-updated {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+/* 最后更新时间样式 */
+.last-updated-footer {
+  display: block !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  padding-top: 10px !important;
+  font-size: 0.9em !important;
+  font-style: italic !important;
+  color: #666 !important;
+  border-top: 1px solid #eee !important;
+}
+
+/* 最后更新时间样式 - 提高选择器特异性 */
+html body .VPDoc .last-updated-footer {
+  display: block !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  padding-top: 10px !important;
+  font-size: 0.9em !important;
+  font-style: italic !important;
+  color: #666 !important;
+  border-top: 1px solid #eee !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
