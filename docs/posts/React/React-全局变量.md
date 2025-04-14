@@ -1,0 +1,62 @@
+---
+tag: React
+title: React 全局 useContext
+des: 学习使用useContext 
+date: 2025-04-15 00:31:18
+img: data:image/png;base64,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 
+---
+
+# 🌐 React 全局 useContext
+
+## ⚙️ 编写hooks
+
+```js
+import { useContext, createContext } from "react";
+import { useState, useMemo } from "react";
+
+const FooContext = createContext();
+
+
+export function useFoo() {
+  return useContext(FooContext);
+}
+
+export function FooProvider({ children }) {
+      const [bar,setBar] = useState('...')
+
+      return (
+        <FooProvider.Provider value={
+          {
+            bar,setBar // 全局的变量
+          }
+        }>
+
+        </FooProvider.Provider>
+      )
+}
+
+```
+
+## 🛠️ 全局配置 
+在`main.jsx`中添加`Provider`
+
+```js
+import { FooProvider } from './hooks/useFoo.jsx'
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <FooProvider>
+      <App />
+    </FooProvider>
+
+  </StrictMode>,
+)
+```
+
+## 🧩 组件中调用
+```js
+import { useFoo } from './hooks/useFoo.jsx'
+
+const {bar,setBar} = useFoo()
+```
+
+
