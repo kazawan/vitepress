@@ -37,5 +37,5 @@ jobs:
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           # script: ls -a
-          source: 'dist'
+          source: './docs/.vitepress/dist'
           target: '/home/ubuntu/vpwiki/'    
