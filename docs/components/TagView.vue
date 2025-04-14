@@ -1,6 +1,6 @@
 <template>
-  <h1>{{ triggerRef === "home" ? "New" : triggerRef }}</h1>
-  <div v-if="triggerRef === 'home'">
+  <h1>{{ props.triggerRef === "home" ? "New" : props.triggerRef }}</h1>
+  <div v-if="props.triggerRef === 'home'">
     <p>Welcome to the home page!</p>
     <div class="card-container">
       <div
@@ -9,13 +9,18 @@
         class="card-item"
         @click="$emit('update:tagViewRef', itemValue)"
       >
+        <div class="card-image">
+          <a :href="itemValue.url">
+            <img :src="itemValue.img || '/img/noimg.jpg'" alt="">
+          </a>
+        </div>
         <div class="card-content">
           <h3 class="card-title">
             <a :href="itemValue.url">{{ itemValue.title }}</a>
           </h3>
           <p class="card-description">{{ itemValue.des }}</p>
           <div class="card-footer">
-            <span class="card-date">{{ itemValue.date }}</span>
+            <span class="card-date">{{ formatDate(itemValue.date) }}</span>
             <span class="card-tag">{{ itemValue.tag }}</span>
           </div>
         </div>
@@ -23,7 +28,30 @@
     </div>
   </div>
   <div v-else>
-    <p>Welcome to the tag view page! {{ triggerRef }}</p>
+    <div class="card-container">
+      <div
+        v-for="(itemValue, index) in taggedItems"
+        :key="index"
+        class="card-item"
+        @click="$emit('update:tagViewRef', itemValue)"
+      >
+        <div class="card-image">
+          <a :href="itemValue.url">
+            <img :src="itemValue.img || '/img/noimg.jpg'" alt="">
+          </a>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">
+            <a :href="itemValue.url">{{ itemValue.title }}</a>
+          </h3>
+          <p class="card-description">{{ itemValue.des }}</p>
+          <div class="card-footer">
+            <span class="card-date">{{ formatDate(itemValue.date) }}</span>
+            <span class="card-tag">{{ itemValue.tag }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,10 +65,25 @@ const props = defineProps({
   },
 });
 
-// 计算属性，当triggerRef为home时只显示前3个items
+// 计算属性，按照日期排序并显示最新的4条记录
 const homeItems = computed(() => {
-  return props.items.slice(0, 10);
+  return [...props.items]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 4);
 });
+
+// 计算属性，显示特定标签下的所有文章
+const taggedItems = computed(() => {
+  return [...props.items]
+    .filter(item => item.tag === props.triggerRef)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+});
+
+// 格式化日期，只显示年月日
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
 </script>
 
 <style scoped>
@@ -63,6 +106,24 @@ const homeItems = computed(() => {
 .card-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card-item:hover .card-image img {
+  transform: scale(1.05);
 }
 
 .card-content {

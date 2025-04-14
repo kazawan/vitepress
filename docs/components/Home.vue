@@ -1,6 +1,7 @@
 <template>
-  <h1>Home</h1>
-  <p>Welcome to the home page!</p>
+  <div class="tag-item-new" @click="updateTag('home')">
+    <div>New</div>
+  </div>
   <div v-for="(itemValue, index) in item" :key="index" class="tag-item" @click="updateTag(itemValue)">
     <div>{{ itemValue }}</div>
   </div>
@@ -50,6 +51,25 @@ const displayedItems = computed(() => {
 
 .tag-item:hover {
   background-color: #4a9b8d;
+  transform: scale(1.05);
+}
+
+.tag-item-new{
+  display: inline-block;
+  padding: 4px 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: #f055ce;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tag-item-new:hover {
+  background-color: #cf97e9;
   transform: scale(1.05);
 }
 </style>
