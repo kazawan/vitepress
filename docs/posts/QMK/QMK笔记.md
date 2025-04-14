@@ -37,7 +37,7 @@ pro micro 芯片
 
 ## Matrix 管脚
 
-![](./img/32u4-pin.png)   
+![](/32u4-pin.png)   
 > 不能使用开发版上的管脚定义，需要使用芯片的管脚定义   
 
 ```json
