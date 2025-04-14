@@ -1,17 +1,15 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from "vitepress"
+import { getSidebar } from 'vitepress-plugin-auto-sidebar'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "卡泽湾2.0",
   description: "A VitePress Site",
   lastUpdated: true,
-  sitebar: false,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
-      {text: 'API', link: '/api-examples'},
     ],
     lastUpdatedText: '最后更新于',
     lastUpdated: {
@@ -22,22 +20,18 @@ export default defineConfig({
       }
     },
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
+    // sidebar: 'auto',  // 使用自动生成的侧边栏
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ],
     search: {
       provider: 'local'
-    }
-    
+    },
+    sidebar: getSidebar({ contentRoot: '/docs', contentDirs: ['posts'], collapsible: true, collapsed: false,useFrontmatter : true }),
+    docFooter: {
+      prev: '上一篇',
+      next: '下一篇'
+    },
   }
 })

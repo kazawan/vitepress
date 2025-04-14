@@ -4,7 +4,7 @@
       <div class="imgbox">
         <img
           class="topimg"
-          :src="frontmatter.img || '/img/noimg.jpg'"
+          :src="frontmatter.img || '/noimg.jpg'"
           alt=""
         />
       </div>

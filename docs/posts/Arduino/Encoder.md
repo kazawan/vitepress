@@ -2,7 +2,6 @@
 tag: Arduino
 title: Encoder的使用
 date: 2025-04-12
-sidebar: false
 ---
 
 # Encoder的使用

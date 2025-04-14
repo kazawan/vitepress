@@ -11,7 +11,7 @@
       >
         <div class="card-image">
           <a :href="itemValue.url">
-            <img :src="itemValue.img || '/img/noimg.jpg'" alt="">
+            <img :src="itemValue.img || '/noimg.jpg'" alt="">
           </a>
         </div>
         <div class="card-content">
@@ -37,7 +37,7 @@
       >
         <div class="card-image">
           <a :href="itemValue.url">
-            <img :src="itemValue.img || '/img/noimg.jpg'" alt="">
+            <img :src="itemValue.img || '/noimg.jpg'" alt="">
           </a>
         </div>
         <div class="card-content">
