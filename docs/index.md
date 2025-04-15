@@ -17,22 +17,45 @@ layout: home
 <script setup>
   import {ref} from 'vue'
   import Home from './components/Home.vue'
- import {data as d}  from './.vitepress/post.data.js'
- import TagView from './components/TagView.vue'
- const tags = []
-  d.forEach((item)=>{
-    if(!tags.includes(item.tag)){
-      tags.push(item.tag)
-    }
- })
- const tagViewRef = ref('home')
- console.log(d);
+  import {data as d}  from './.vitepress/post.data.js'
+  import TagView from './components/TagView.vue'
+  const tags = ref([])
 
- const updateTagRef = (newTag) => {
-   tagViewRef.value = newTag;
- }
+  // 获取所有标签 - 修复版
+  d.forEach((item) => {
+    // 处理单个标签情况 - 字符串形式
+    if (typeof item.tag === 'string' && item.tag.trim() !== '') {
+      if (!tags.value.includes(item.tag)) {
+        tags.value.push(item.tag)
+      }
+    }
+    
+    // 处理单个标签为数组的情况
+    if (Array.isArray(item.tag)) {
+      item.tag.forEach(tag => {
+        if (typeof tag === 'string' && tag.trim() !== '' && !tags.value.includes(tag)) {
+          tags.value.push(tag)
+        }
+      })
+    }
+    
+    // 处理多标签数组情况 (兼容item.tags字段)
+    if (Array.isArray(item.tags)) {
+      item.tags.forEach(tag => {
+        if (typeof tag === 'string' && tag.trim() !== '' && !tags.value.includes(tag)) {
+          tags.value.push(tag)
+        }
+      })
+    }
+  })
+  
+  const tagViewRef = ref('home')
+
+  const updateTagRef = (newTag) => {
+    tagViewRef.value = newTag || 'home';
+  }
 </script>
 
-<Home :item="tags" :tagViewRef="tagViewRef.value" @update:tagViewRef="updateTagRef">
+<Home :item="tags" :tagViewRef="tagViewRef" @update:tagViewRef="updateTagRef">
   <TagView :triggerRef="tagViewRef" :items='d' />
 </Home>

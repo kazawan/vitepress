@@ -8,13 +8,18 @@
           alt=""
         />
       </div>
+
+      <!-- 简洁的标签显示区域 -->
+      <div class="tags-wrapper" v-if="tagsExist">
+        <span 
+          v-for="(tag, index) in tags" 
+          :key="index"
+          class="tag"
+        >
+          {{ tag }}
+        </span>
+      </div>
     </template>
-    <!-- <template #doc-footer-before>
-      ...
-      <p class="last-updated-time" v-if="lastUpdated">
-        {{ themeConfig.lastUpdated?.text || '最后更新于' }}: {{ lastUpdated }}
-      </p>
-    </template> -->
   </Layout>
 </template>
 
@@ -26,19 +31,17 @@ import { computed } from "vue";
 const { Layout } = DefaultTheme;
 const { page, theme, frontmatter } = useData();
 
-const lastUpdated = computed(() => {
-  const { lastUpdated } = page.value;
-  if (!lastUpdated) return null;
-
-  const options = theme.value.lastUpdated?.formatOptions || {
-    dateStyle: "full",
-    timeStyle: "medium",
-  };
-
-  return new Date(lastUpdated).toLocaleString("zh-CN", options);
+// 计算标签属性，支持tag或tags键名
+const tags = computed(() => {
+  const tagValue = frontmatter.value.tag || frontmatter.value.tags;
+  if (!tagValue) return [];
+  return Array.isArray(tagValue) ? tagValue : [tagValue];
 });
 
-const themeConfig = computed(() => theme.value);
+// 确定是否存在标签
+const tagsExist = computed(() => {
+  return tags.value && tags.value.length > 0;
+});
 </script>
 
 <style scoped>
@@ -67,5 +70,28 @@ const themeConfig = computed(() => theme.value);
   left: 0;
 }
 
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px 0 16px 0;
+}
 
+.tag {
+  background-color: #55bbb9;
+  color: #eeeded;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+  transition: background-color 0.2s, color 0.2s;
+  pointer-events: none; /* 添加不可点击属性 */
+  user-select: none; /* 防止文本被选中 */
+}
+
+.tag:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
 </style>

@@ -1,5 +1,7 @@
 ---
-tag: QMK
+tag: 
+  - QMK
+  - VIA
 title: VIA 配置json文件
 des: 让你方便线上更改键位
 date: 2025-04-14 23:04:51

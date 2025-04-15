@@ -21,7 +21,10 @@
           <p class="card-description">{{ itemValue.des }}</p>
           <div class="card-footer">
             <span class="card-date">{{ formatDate(itemValue.date) }}</span>
-            <span class="card-tag">{{ itemValue.tag }}</span>
+            <div class="card-tags">
+              <span v-if="!Array.isArray(itemValue.tag)" class="card-tag">{{ itemValue.tag }}</span>
+              <span v-else v-for="(tag, tagIndex) in itemValue.tag" :key="tagIndex" class="card-tag">{{ tag }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -47,7 +50,10 @@
           <p class="card-description">{{ itemValue.des }}</p>
           <div class="card-footer">
             <span class="card-date">{{ formatDate(itemValue.date) }}</span>
-            <span class="card-tag">{{ itemValue.tag }}</span>
+            <div class="card-tags">
+              <span v-if="!Array.isArray(itemValue.tag)" class="card-tag">{{ itemValue.tag }}</span>
+              <span v-else v-for="(tag, tagIndex) in itemValue.tag" :key="tagIndex" class="card-tag">{{ tag }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -75,7 +81,15 @@ const homeItems = computed(() => {
 // 计算属性，显示特定标签下的所有文章
 const taggedItems = computed(() => {
   return [...props.items]
-    .filter(item => item.tag === props.triggerRef)
+    .filter(item => {
+      if (Array.isArray(item.tag)) {
+        // 如果tag是数组，检查是否包含triggerRef
+        return item.tag.includes(props.triggerRef);
+      } else {
+        // 如果tag是字符串，直接比较
+        return item.tag === props.triggerRef;
+      }
+    })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 });
 
@@ -152,14 +166,21 @@ function formatDate(dateString) {
   padding-top: 12px;
 }
 
-.card-date, .card-tag {
+.card-date {
   display: inline-block;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .card-tag {
   background-color: #f0f0f0;
   padding: 2px 8px;
   border-radius: 4px;
+  margin-right: 4px;
 }
 
 /* 添加a标签样式 */
