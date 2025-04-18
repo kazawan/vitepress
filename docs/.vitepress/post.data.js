@@ -14,6 +14,7 @@ export default createContentLoader('posts/**/*.md', {
             // console.log(item)
             const { title, date, tag, src,des ,img} = item.frontmatter
             const { url } = item
+            const catalog = item.url.split('/').slice(2, -1).join('/')
             return {
                 title,
                 date,
@@ -22,6 +23,7 @@ export default createContentLoader('posts/**/*.md', {
                 url,
                 des,
                 img,
+                catalog,
                 
             }
         })

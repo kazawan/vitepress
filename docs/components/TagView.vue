@@ -58,11 +58,14 @@
         </div>
       </div>
     </div>
+    <div v-if="hasMore" class="load-more-container">
+      <button class="load-more-btn" @click="loadMore">加载更多</button>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 const props = defineProps({
   triggerRef: String,
   items: {
@@ -78,20 +81,61 @@ const homeItems = computed(() => {
     .slice(0, 9);
 });
 
-// 计算属性，显示特定标签下的所有文章
-const taggedItems = computed(() => {
+// 计算属性，显示特定标签或分类下的所有文章
+const pageSize = 6;
+const currentPage = ref(1);
+
+const filteredItems = computed(() => {
   return [...props.items]
     .filter(item => {
+      // 检查是否匹配分类
+      if (item.catalog === props.triggerRef) {
+        return true;
+      }
+      // 检查是否匹配标签
       if (Array.isArray(item.tag)) {
         // 如果tag是数组，检查是否包含triggerRef
         return item.tag.includes(props.triggerRef);
-      } else {
+      } else if (item.tag) {
         // 如果tag是字符串，直接比较
         return item.tag === props.triggerRef;
       }
+      return false;
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 });
+
+const taggedItems = computed(() => {
+  const start = (currentPage.value - 1) * pageSize;
+  const end = start + pageSize;
+  return filteredItems.value.slice(0, end);
+});
+
+const hasMore = computed(() => {
+  return filteredItems.value.length > currentPage.value * pageSize;
+});
+
+function loadMore() {
+  currentPage.value += 1;
+}
+
+// 滚动加载
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+
+function handleScroll() {
+  const scrollPosition = window.innerHeight + window.scrollY;
+  const pageHeight = document.body.offsetHeight;
+  
+  if (pageHeight - scrollPosition < 100 && hasMore.value) {
+    loadMore();
+  }
+}
 
 // 格式化日期，只显示年月日
 function formatDate(dateString) {
@@ -216,6 +260,29 @@ a.button {
 }
 
 a.button:hover {
+  background-color: #2c9465;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.load-more-btn {
+  padding: 10px 20px;
+  background-color: #3eaf7c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
   background-color: #2c9465;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);

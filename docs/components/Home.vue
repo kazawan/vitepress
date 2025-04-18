@@ -1,14 +1,14 @@
 <template>
   <div class="tag-container">
     <!-- 搜索框 -->
-    <div class="search-box" v-if="showSearch">
+    <!-- <div class="search-box" v-if="showSearch">
       <input 
         type="text" 
         v-model="searchQuery" 
         placeholder="搜索标签..." 
         @input="handleSearch" 
       />
-    </div>
+    </div> -->
 
     <!-- 标签导航区 -->
     <div class="tags-navigation">
@@ -17,17 +17,11 @@
       </div>
 
       <!-- 显示过滤后的标签，最多显示maxVisibleTags个 -->
-      <div 
-        v-for="(itemValue, index) in displayedTags" 
-        :key="index" 
-        class="tag-item" 
-        @click="updateTag(itemValue)"
-      >
-        <div>{{ itemValue }}</div>
+      <div v-for="(itemValue, index) in catalogs" :key="index" class="tag-item" @click="updateTag(itemValue)">
+          <div>{{ itemValue }}</div>
       </div>
-      
-      <!-- 当标签数量超过最大显示数量时显示"更多"按钮 -->
-      <div 
+
+      <!-- <div 
         v-if="filteredTags.length > maxVisibleTags && !showAllTags" 
         class="tag-item-more" 
         @click="showAllTags = true"
@@ -35,14 +29,13 @@
         <div>更多 ({{ filteredTags.length - maxVisibleTags }})</div>
       </div>
       
-      <!-- 显示"收起"按钮 -->
       <div 
         v-if="showAllTags && filteredTags.length > maxVisibleTags" 
         class="tag-item-less" 
         @click="showAllTags = false"
       >
-        <div>收起</div>
-      </div>
+        <div>收起</div> 
+      </div> -->
     </div>
 
     <slot></slot>
@@ -50,7 +43,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref } from "vue";
 
 const props = defineProps({
   item: {
@@ -59,39 +52,43 @@ const props = defineProps({
   },
   tagViewRef: {
     type: [Object, String],
-    required: true
+    required: true,
   },
   maxVisibleTags: {
     type: Number,
-    default: 12 // 默认最多显示12个标签
+    default: 12, // 默认最多显示12个标签
   },
   showSearch: {
     type: Boolean,
-    default: true // 默认显示搜索框
-  }
+    default: true, // 默认显示搜索框
+  },
+  catalogs: {
+    type: Array,
+    default: () => [],
+  },
 });
 
-const emit = defineEmits(['update:tagViewRef']);
-const searchQuery = ref('');
+const emit = defineEmits(["update:tagViewRef"]);
+const searchQuery = ref("");
 const showAllTags = ref(false);
 
 const updateTag = (tag) => {
-  emit('update:tagViewRef', tag);
+  emit("update:tagViewRef", tag);
 };
 
 // 处理标签数组，确保扁平化和去重
 const processedItems = computed(() => {
   let flattenedItems = props.item;
-  
+
   if (Array.isArray(props.item)) {
-    flattenedItems = props.item.flatMap(tag => {
+    flattenedItems = props.item.flatMap((tag) => {
       if (Array.isArray(tag)) {
         return tag;
       }
       return tag;
     });
   }
-  
+
   return [...new Set(flattenedItems)];
 });
 
@@ -100,8 +97,8 @@ const filteredTags = computed(() => {
   if (!searchQuery.value.trim()) {
     return processedItems.value;
   }
-  
-  return processedItems.value.filter(tag => 
+
+  return processedItems.value.filter((tag) =>
     tag.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
@@ -155,6 +152,7 @@ const handleSearch = () => {
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 10px;
+  justify-content: center;
 }
 
 .tag-item {
@@ -167,13 +165,13 @@ const handleSearch = () => {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tag-item:hover {
   background-color: #4a9b8d;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .tag-item-new {
@@ -186,16 +184,17 @@ const handleSearch = () => {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tag-item-new:hover {
   background-color: #cf97e9;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.tag-item-more, .tag-item-less {
+.tag-item-more,
+.tag-item-less {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 16px;
@@ -207,7 +206,8 @@ const handleSearch = () => {
   transition: all 0.2s ease;
 }
 
-.tag-item-more:hover, .tag-item-less:hover {
+.tag-item-more:hover,
+.tag-item-less:hover {
   background-color: #5a5a5a;
   transform: translateY(-2px);
 }

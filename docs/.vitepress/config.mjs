@@ -11,6 +11,9 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
     ],
+
+
+
     lastUpdatedText: '最后更新于',
     lastUpdated: {
       text: '最后更新于',
@@ -28,10 +31,15 @@ export default defineConfig({
     search: {
       provider: 'local'
     },
-    sidebar: getSidebar({ contentRoot: '/docs', contentDirs: ['posts'], collapsible: true, collapsed: false,useFrontmatter : true }),
-    docFooter: {
+    sidebar: getSidebar({ contentRoot: '/docs', contentDirs: ['posts'], collapsible: true, collapsed: false, useFrontmatter: false }),
+
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2019-present Evan You'
+    }, docFooter: {
       prev: '上一篇',
       next: '下一篇'
     },
-  }
+  },
+
 })
