@@ -10,7 +10,7 @@
       </div>
 
       <!-- 简洁的标签显示区域 -->
-      <div class="tags-wrapper" v-if="tagsExist">
+      <!-- <div class="tags-wrapper" v-if="tagsExist">
         <span 
           v-for="(tag, index) in tags" 
           :key="index"
@@ -18,7 +18,7 @@
         >
           {{ tag }}
         </span>
-      </div>
+      </div> -->
     </template>
   </Layout>
 </template>
