@@ -5,7 +5,7 @@ import { getSidebar } from 'vitepress-plugin-auto-sidebar'
 export default defineConfig({
   title: "🚀卡泽湾2.0",
   description: "A VitePress Site",
-  lastUpdated: true,
+  // lastUpdated: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -14,14 +14,14 @@ export default defineConfig({
 
 
 
-    lastUpdatedText: '最后更新于',
-    lastUpdated: {
-      text: '最后更新于',
-      formatOptions: {
-        dateStyle: 'full',
-        timeStyle: 'medium'
-      }
-    },
+    // lastUpdatedText: '最后更新于',
+    // lastUpdated: {
+    //   text: '最后更新于',
+    //   formatOptions: {
+    //     dateStyle: 'full',
+    //     timeStyle: 'medium'
+    //   }
+    // },
 
     // sidebar: 'auto',  // 使用自动生成的侧边栏
 

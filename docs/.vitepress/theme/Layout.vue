@@ -20,6 +20,10 @@
         </span>
       </div> -->
     </template>
+    <template #doc-footer-before>
+        <p class="updatetimecss"> 文章更新于⏰： {{  frontmatter.date }}</p>
+
+    </template>
   </Layout>
 </template>
 
@@ -59,6 +63,10 @@ const tagsExist = computed(() => {
   overflow: hidden;
   position: relative;
   margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+
 }
 
 .topimg{
@@ -68,6 +76,7 @@ const tagsExist = computed(() => {
   position: absolute;
   top: 0;
   left: 0;
+  /* <!-- 放大 --> */
 }
 
 .tags-wrapper {
@@ -93,5 +102,12 @@ const tagsExist = computed(() => {
 .tag:hover {
   background-color: #e0e0e0;
   color: #333;
+}
+
+.updatetimecss{
+  background-color: #55bbb9;
+  padding-left: 1rem;
+  border-radius: 5px;
+  color:#eeeded;
 }
 </style>
