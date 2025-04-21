@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, nextTick } from "vue";
 
 const props = defineProps({
   item: {
@@ -74,6 +74,19 @@ const showAllTags = ref(false);
 
 const updateTag = (tag) => {
   emit("update:tagViewRef", tag);
+  nextTick(() => {
+    const element = document.getElementById('category-tag-view');
+    if (element) {
+      const offset = 120; // 调整这个值来微调位置
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
 };
 
 // 处理标签数组，确保扁平化和去重

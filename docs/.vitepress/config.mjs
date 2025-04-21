@@ -3,7 +3,7 @@ import { getSidebar } from 'vitepress-plugin-auto-sidebar'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "卡泽湾2.0",
+  title: "🚀卡泽湾2.0",
   description: "A VitePress Site",
   lastUpdated: true,
   themeConfig: {

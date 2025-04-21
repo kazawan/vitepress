@@ -6,7 +6,7 @@
           <span class="clip">卡泽湾2.0</span>
         </h1>
         <p class="text">
-          记录ESP32、STM32、QMK等嵌入式开发经验与技术分享
+          ⚙️记录ESP32、STM32、QMK等嵌入式开发经验与技术分享
         </p>
       </div>
       <div class="image">

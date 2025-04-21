@@ -18,7 +18,7 @@ layout: home
   import {ref} from 'vue'
   import Home from './components/Home.vue'
   import {data as d}  from './.vitepress/post.data.js'
-  import TagView from './components/TagView.vue'
+import CategoryTagView from './components/CategoryTagView.vue'
   import HomeHero from './components/HomeHero.vue'
   const tags = ref([])
   const catalogs = ref([])
@@ -76,5 +76,5 @@ layout: home
       @update:tagViewRef="updateTagRef"
       :catalogs="catalogs"
       >
-  <TagView :triggerRef="tagViewRef" :items='d' />
+  <CategoryTagView ref="categoryTagViewRef" :categoryOrTag="tagViewRef" :items='d' />
 </Home>
