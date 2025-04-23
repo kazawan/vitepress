@@ -1,7 +1,7 @@
 ---
 tag: QMK
 title: 键盘PCB layout 制作笔记
-date: 2025-04-14 22:58:25
+date: 2025-04-23 17:10:32
 des: 如何快速制作键盘pcb
 img: https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2023/08/qmk-keyboard-firmware.jpg
 ---
