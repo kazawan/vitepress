@@ -11,4 +11,3 @@ img: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuT9lMYmHgga9Sgs7ujYe
 ```sh
 qmk new-keyboard
 ```
-
