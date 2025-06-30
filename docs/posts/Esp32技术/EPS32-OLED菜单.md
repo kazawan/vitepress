@@ -2,7 +2,7 @@
 tag: arduino
 title: ESP32 OLED丝滑菜单
 des: 基于Arduino u8g2库的ESP32 OLED菜单实现
-date: 2025-05-30 11:32:55
+date: 2025-06-30 16:47:00
 img: https://giltesa.com/wp-content/uploads/freshizer/48ada75a917cd0ca36fc9f668fe8f599_oled_menu-498x280-648-328-c.jpg
 ---
 
@@ -50,6 +50,31 @@ void loop() {
   u8g2.drawStr(0, 10, "Hello World!"); // 绘制字符串
   u8g2.sendBuffer(); // 发送缓冲区到显示器
 }
+```
+
+
+## platformIO ini 配置
+
+```ini
+[env:esp32-s3-devkitc-1]
+platform = espressif32
+board = esp32-s3-devkitc-1
+framework = arduino
+board_build.arduino.memory_type = qio_opi
+board_build.f_cpu = 240000000L
+board_build.f_flash = 80000000L
+board_build.flash_mode = qio
+board_build.partitions = huge_app.csv
+build_flags = 
+	-O2
+	-DBOARD_HAS_PSRAM
+	-DARDUINO_USB_MODE=1
+	-DARDUINO_USB_CDC_ON_BOOT=1
+	-DCORE_DEBUG_LEVEL=5 
+build_unflags = -Os
+board_upload.flash_size = 16MB
+lib_deps = olikraus/U8g2@^2.36.12
+monitor_speed = 115200
 ```
 
 未完待续....
