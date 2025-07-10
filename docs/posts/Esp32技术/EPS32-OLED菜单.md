@@ -77,8 +77,39 @@ lib_deps = olikraus/U8g2@^2.36.12
 monitor_speed = 115200
 ```
 
-未完待续....
 
 
 
+##  菜单类配置
 
+整个库分为 `HAL` 和 `UI` 两部分，`HAL` 部分负责硬件相关的操作，`UI` 部分负责用户界面的绘制和交互。
+
+### HAL 部分
+...未写
+
+### UI 部分
+
+需要  `class UI` `class PAGE` `class LIST_ITEM` 三部分
+
+1. **UI类** - 管理视图状态和控制逻辑
+   - 视图坐标(viewpoint_x/y)和动画目标值
+   - 侧边栏高度控制(sidebar_height)
+   - 控制类型(CONTROL_ENUM)
+   - 视窗绘制(viewpoint_draw)
+   - 全局(current_page  PAGE_ROUTE(枚举) )
+
+2. **UI_PAGE类** - 管理页面内容和交互
+   - 页面项列表(items)
+   - 当前选中项(current_item_index)
+   - 光标位置和动画(cursor_x/y)
+   - 控制事件处理(control_handler)
+
+3. **PAGE_ITEM类** - 表示单个页面项
+   - 标题(item_title)
+   - 坐标位置(item_x/y)
+   - 索引值(index)
+
+4 **AnimationValue类** - 用于处理动画效果
+   - 目标值(target_value)
+   - 当前值(current_value)
+   - 动画速度(speed)
