@@ -1,0 +1,23 @@
+services:
+  kazaland:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kazaland
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - kazaland-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  kazaland-network:
+    driver: bridge
